@@ -13,6 +13,7 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
+  geocoding: ^2.0.4
   geolocator: ^9.0.1
   logger: any
   retrofit: ^3.0.1+1

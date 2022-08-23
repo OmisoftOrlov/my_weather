@@ -2,7 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../data_layer/secret_storage/secret_storage.dart';
+import '../../secret_storage/secret_storage.dart';
 
 part 'weather_client.g.dart';
 

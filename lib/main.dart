@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_weather/data_layer/location_provider.dart';
+import '../data_layer/data_providers/location_provider/location_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +31,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final LocationProvider locationProvider = LocationProvider();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -41,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FutureBuilder(
-                future: locationProvider.getCurrentLocation(),
+                future: LocationProvider.getInstance(),
                 initialData: "no location yet",
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
@@ -50,7 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     case ConnectionState.waiting:
                       return const CircularProgressIndicator();
                     case ConnectionState.done:
-                      return Text(snapshot.data as String);
+                      return Column(children: [
+                        Text((snapshot.data as LocationProvider).currentLocation),
+                        Text((snapshot.data as LocationProvider).currentPlace),
+                      ],);
                     case ConnectionState.none:
                       return const Text("None data");
                   }
