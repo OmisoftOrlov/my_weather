@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data_layer/data_providers/location_provider/location_provider.dart';
+import 'data_layer/data_providers/weather_provider/weather_client.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,33 +31,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    WeatherService service = WeatherService();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FutureBuilder(
-                future: LocationProvider.getInstance(),
-                initialData: "no location yet",
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.active:
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FutureBuilder(
+                  future: service.getAstronomy15daysForecastByLocation(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
-                    case ConnectionState.waiting:
-                      return const CircularProgressIndicator();
-                    case ConnectionState.done:
-                      return Column(children: [
-                        Text((snapshot.data as LocationProvider).currentLocation),
-                        Text((snapshot.data as LocationProvider).currentPlace),
-                      ],);
-                    case ConnectionState.none:
-                      return const Text("None data");
-                  }
-                }),
-          ],
+                    } else if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    } else if (snapshot.hasData) {
+                      return Text(snapshot.data.toString());
+                    } else {
+                      return const Text("Something went wrong");
+                    }
+                  }),
+            ],
+          ),
         ),
       ),
     );

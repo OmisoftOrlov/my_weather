@@ -2,30 +2,15 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationProvider {
-  final Position _currentPosition;
-  final Placemark _currentPlace;
+  static final LocationProvider _instance = LocationProvider._internal();
 
-  LocationProvider(this._currentPosition, this._currentPlace);
-
-  static Future<LocationProvider> getInstance() async {
-    Position position;
-    Placemark placemark;
-    position = await _determinePosition();
-    placemark =
-        await _getAddressFromLatLng(position.latitude, position.longitude);
-
-    return Future.value(LocationProvider(position, placemark));
+  factory LocationProvider() {
+    return _instance;
   }
 
-  String get currentLocation {
-    return "Current location: ${_currentPosition.latitude}, ${_currentPosition.longitude}";
-  }
+  LocationProvider._internal();
 
-  String get currentPlace {
-    return "Current place: ${_currentPlace.name}, ${_currentPlace.country}";
-  }
-
-  static Future<Position> _determinePosition() async {
+  Future<Position> getUserCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -49,10 +34,10 @@ class LocationProvider {
     return await Geolocator.getCurrentPosition();
   }
 
-  static Future<Placemark> _getAddressFromLatLng(
+  Future<Placemark> getLocationAddress(
       double latitude, double longitude) async {
     return await placemarkFromCoordinates(latitude, longitude).then(
-      (p) => Future.value(p[0]),
+      (placemarks) => Future.value(placemarks[0]),
       onError: (e) => Future.value(e.toString()),
     );
   }
