@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:my_weather/data_layer/models/astronomy_forecast.dart';
+import '../../constants/constants.dart';
 import '/data_layer/data_providers/location_provider/location_provider.dart';
 import '/data_layer/data_providers/weather_provider/logging_interceptor.dart';
 import '/data_layer/models/weather.dart';

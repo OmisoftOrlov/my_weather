@@ -19,8 +19,8 @@ CurrentWeather _$CurrentWeatherFromJson(Map<String, dynamic> json) =>
       windSpeed: (json['windspeed'] as num).toDouble(),
       windDirection: (json['winddir'] as num).toDouble(),
       pressure: (json['pressure'] as num).toDouble(),
-      conditions: json['conditions'] as String,
-      icon: json['icon'] as String,
+      conditions:
+          CurrentWeather._conditionFromJson(json['conditions'] as String),
     );
 
 Map<String, dynamic> _$CurrentWeatherToJson(CurrentWeather instance) =>
@@ -34,8 +34,7 @@ Map<String, dynamic> _$CurrentWeatherToJson(CurrentWeather instance) =>
       'windspeed': instance.windSpeed,
       'winddir': instance.windDirection,
       'pressure': instance.pressure,
-      'conditions': instance.conditions,
-      'icon': instance.icon,
+      'conditions': CurrentWeather._conditionToJson(instance.conditions),
     };
 
 const _$PrecipitationTypeEnumMap = {

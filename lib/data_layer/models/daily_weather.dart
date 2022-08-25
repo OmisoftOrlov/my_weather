@@ -1,7 +1,10 @@
 // ignore_for_file: depend_on_referenced_packages
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import '/data_layer/models/hourly_weather.dart';
+import 'condition.dart';
 import 'enums/precipitation_type.dart';
 
 part 'daily_weather.g.dart';
@@ -24,9 +27,8 @@ class DailyWeather {
   @JsonKey(name: "winddir")
   final double windDirection;
   final double pressure;
-  final String conditions;
-  final String description;
-  final String icon;
+  @JsonKey(fromJson: _conditionFromJson, toJson: _conditionToJson)
+  final Condition conditions;
   final List<HourlyWeather> hours;
 
   DailyWeather({
@@ -40,8 +42,6 @@ class DailyWeather {
     required this.windDirection,
     required this.pressure,
     required this.conditions,
-    required this.description,
-    required this.icon,
     required this.hours,
   });
 
@@ -54,8 +54,12 @@ class DailyWeather {
       DateTime.fromMillisecondsSinceEpoch((timestamp * 1000));
   static int _toJson(DateTime dateTime) => dateTime.millisecondsSinceEpoch;
 
+  static Condition _conditionFromJson(String type) => Condition.fromType(type);
+
+  static String _conditionToJson(Condition condition) => jsonEncode(condition);
+
   @override
   String toString() {
-    return "Daily weather: $dateTime, $temperature, $feelsLike, $humidity, $precipitationProbability, ${precipType.name}, $windSpeed, $windDirection, $pressure, $conditions, $description, $icon, $hours";
+    return "Daily weather: $dateTime, $temperature, $feelsLike, $humidity, $precipitationProbability, ${precipType.name}, $windSpeed, $windDirection, $pressure, $conditions, $hours";
   }
 }
