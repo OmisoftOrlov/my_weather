@@ -17,6 +17,7 @@ dependencies:
   geocoding: ^2.0.4
   geolocator: ^9.0.1
   logger: ^1.1.0
+  lottie: ^1.4.2
 
 dev_dependencies:
   build_runner: 2.2.0
@@ -27,10 +28,65 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+
+  assets:
+    - assets/lottie_animations/wind_snow.json
+    - assets/lottie_animations/drizzle.json
+    - assets/lottie_animations/dust_wind.json
+    - assets/lottie_animations/fog_day.json
+    - assets/lottie_animations/fog_night.json
+    - assets/lottie_animations/extreme_drizzle.json
+    - assets/lottie_animations/extreme_fog.json
+    - assets/lottie_animations/extreme_day_drizzle.json
+    - assets/lottie_animations/extreme_night_drizzle.json
+    - assets/lottie_animations/partly_cloudy_day_drizzle.json
+    - assets/lottie_animations/partly_cloudy_night_drizzle.json
+    - assets/lottie_animations/tornado.json
+    - assets/lottie_animations/extreme_day_hail.json
+    - assets/lottie_animations/extreme_night_hail.json
+    - assets/lottie_animations/slippery.json
+    - assets/lottie_animations/thunderstorms_overcast.json
+    - assets/lottie_animations/mist.json
+    - assets/lottie_animations/overcast_rain.json
+    - assets/lottie_animations/extreme_rain.json
+    - assets/lottie_animations/extreme_day_sleet.json
+    - assets/lottie_animations/extreme_night_sleet.json
+    - assets/lottie_animations/partly_cloudy_day_sleet.json
+    - assets/lottie_animations/partly_cloudy_night_sleet.json
+    - assets/lottie_animations/overcast_day_rain.json
+    - assets/lottie_animations/overcast_night_rain.json
+    - assets/lottie_animations/extreme_day_rain.json
+    - assets/lottie_animations/extreme_night_rain.json
+    - assets/lottie_animations/partly_cloudy_day_rain.json
+    - assets/lottie_animations/partly_cloudy_night_rain.json
+    - assets/lottie_animations/cloud_up.json
+    - assets/lottie_animations/cloud_down.json
+    - assets/lottie_animations/cloudy.json
+    - assets/lottie_animations/haze_day.json
+    - assets/lottie_animations/haze_night.json
+    - assets/lottie_animations/extreme_snow.json
+    - assets/lottie_animations/overcast_day_sleet.json
+    - assets/lottie_animations/overcast_night_sleet.json
+    - assets/lottie_animations/overcast_day_snow.json
+    - assets/lottie_animations/overcast_night_snow.json
+    - assets/lottie_animations/extreme_day_snow.json
+    - assets/lottie_animations/extreme_night_snow.json
+    - assets/lottie_animations/partly_cloudy_day_snow.json
+    - assets/lottie_animations/partly_cloudy_night_snow.json
+    - assets/lottie_animations/wind_squalls.json
+    - assets/lottie_animations/thunderstorms_day_overcast_rain.json
+    - assets/lottie_animations/thunderstorms_night_overcast_rain.json
+    - assets/lottie_animations/thunderstorms_day.json
+    - assets/lottie_animations/thunderstorms_night.json
+    - assets/lottie_animations/hail.json
+    - assets/lottie_animations/overcast_day.json
+    - assets/lottie_animations/overcast_night.json
+    - assets/lottie_animations/partly_cloudy_day.json
+    - assets/lottie_animations/partly_cloudy_night.json
+    - assets/lottie_animations/clear_day.json
+    - assets/lottie_animations/clear_night.json
+    - assets/lottie_animations/undefined.json
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

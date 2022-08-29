@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'data_layer/data_providers/weather_provider/weather_client.dart';
 
 void main() {
@@ -41,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Lottie.asset("assets/lottie_animations/clear_day.json", width: 200, height: 200),
               FutureBuilder(
                   future: service.getWeatherTodayForecastByLocation(),
                   builder: (context, snapshot) {
