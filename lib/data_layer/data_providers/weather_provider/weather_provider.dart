@@ -6,8 +6,8 @@ import '/data_layer/data_providers/weather_provider/logging_interceptor.dart';
 import '/data_layer/models/weather.dart';
 import '/data_layer/secret_storage/secret_storage.dart';
 
-class WeatherService {
-  static final WeatherService _service = WeatherService._internal();
+class WeatherProvider {
+  static final WeatherProvider _service = WeatherProvider._internal();
   final LocationProvider _locationProvider = LocationProvider();
   final Dio _dio = Dio(
     BaseOptions(
@@ -16,9 +16,9 @@ class WeatherService {
     ),
   )..interceptors.add(LoggerInterceptor());
 
-  WeatherService._internal();
+  WeatherProvider._internal();
 
-  factory WeatherService() {
+  factory WeatherProvider() {
     return _service;
   }
 

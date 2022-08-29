@@ -14,12 +14,14 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.1
   geocoding: ^2.0.4
   geolocator: ^9.0.1
   logger: ^1.1.0
   lottie: ^1.4.2
 
 dev_dependencies:
+  bloc_test: ^9.1.0
   build_runner: 2.2.0
   flutter_lints: ^2.0.0
   flutter_test:
@@ -86,7 +88,6 @@ flutter:
     - assets/lottie_animations/clear_day.json
     - assets/lottie_animations/clear_night.json
     - assets/lottie_animations/undefined.json
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

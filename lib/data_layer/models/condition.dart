@@ -190,8 +190,8 @@ class Condition {
     return Condition._(type, description, imagePath);
   }
 
-  void updateImageDependingOnTime(String type, bool isNight) {
-    switch(type) {
+  void updateImageDependingOnTime(bool isNight) {
+    switch(typeId) {
     case "type_1":
         imagePath = "assets/lottie_animations/wind_snow.json";
         break;

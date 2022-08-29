@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'data_layer/data_providers/weather_provider/weather_client.dart';
+import 'data_layer/data_providers/weather_provider/weather_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    WeatherService service = WeatherService();
+    WeatherProvider service = WeatherProvider();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -42,7 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Lottie.asset("assets/lottie_animations/clear_day.json", width: 200, height: 200),
+              Lottie.asset("assets/lottie_animations/clear_day.json",
+                  width: 200, height: 200),
               FutureBuilder(
                   future: service.getWeatherTodayForecastByLocation(),
                   builder: (context, snapshot) {
