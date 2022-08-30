@@ -47,4 +47,4 @@ app.*.map.json
 /android/app/release
 
 # Project files
-/lib/data_layer/secret_storage/secret_storage.dart
+/lib/secret_storage.dart

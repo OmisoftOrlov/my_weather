@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'data_layer/data_providers/weather_provider/weather_provider.dart';
+import 'package:my_weather/data_layer/repositories/weather_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    WeatherProvider service = WeatherProvider();
+    WeatherRepository repository = WeatherRepository();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Lottie.asset("assets/lottie_animations/clear_day.json",
                   width: 200, height: 200),
               FutureBuilder(
-                  future: service.getWeatherTodayForecastByLocation(),
+                  future: repository.getTodayForecastByLocation(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();

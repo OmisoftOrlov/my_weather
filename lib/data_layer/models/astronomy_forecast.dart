@@ -19,6 +19,10 @@ class AstronomyForecast {
     required this.daysAstronomyForecast,
   });
 
+  DayAstronomyForecast getAstronomyForecastByDate(DateTime dateTime) =>
+      daysAstronomyForecast
+          .firstWhere((forecast) => forecast.dateTime.day == dateTime.day);
+
   factory AstronomyForecast.fromJson(Map<String, dynamic> json) =>
       _$AstronomyForecastFromJson(json);
 

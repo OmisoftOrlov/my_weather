@@ -1,32 +1,59 @@
-// ignore_for_file: depend_on_referenced_packages
-import 'package:json_annotation/json_annotation.dart';
+import '../models/astronomy_forecast.dart';
+import '../models/current_weather.dart';
+import '../models/daily_weather.dart';
 
-import '/data_layer/models/current_weather.dart';
-import '/data_layer/models/daily_weather.dart';
-
-part 'weather.g.dart';
-
-@JsonSerializable()
 class Weather {
-  @JsonKey(name: "timezone")
   final String timeZone;
-  @JsonKey(name: "tzoffset")
   final double tzOffset;
   final List<DailyWeather> days;
-  @JsonKey(name: "currentConditions")
   final CurrentWeather currentWeather;
 
-  Weather({
+  Weather._({
     required this.timeZone,
     required this.tzOffset,
     required this.days,
     required this.currentWeather,
   });
 
-  factory Weather.fromJson(Map<String, dynamic> json) =>
-      _$WeatherFromJson(json);
+  factory Weather.fromJson(
+      Map<String, dynamic> json, AstronomyForecast astronomyForecast) {
+    var timeZone = json["timezone"];
+    var tzOffset = json["tzoffset"];
+    var days = getDailyWeatherListFromJson(json["days"], astronomyForecast);
+    var currentWeather =
+        CurrentWeather.fromJson(json["currentConditions"], astronomyForecast);
 
-  Map<String, dynamic> toJson() => _$WeatherToJson(this);
+    return Weather._(
+        timeZone: timeZone,
+        tzOffset: tzOffset,
+        days: days,
+        currentWeather: currentWeather);
+  }
+
+  Map<String, dynamic> toJson() => {
+        "timezone": "Europe/Kiev",
+        "tzoffset": 3.0,
+        "days": convertDailyWeatherListToJson(days),
+        "currentConditions": currentWeather.toJson()
+      };
+
+  static List<DailyWeather> getDailyWeatherListFromJson(
+      List<dynamic> daysList, AstronomyForecast astronomyForecast) {
+    List<DailyWeather> days = List.empty(growable: true);
+    for (var receivedDay in daysList) {
+      days.add(DailyWeather.fromJson(receivedDay, astronomyForecast));
+    }
+    return days;
+  }
+
+  static List<Map<String, dynamic>> convertDailyWeatherListToJson(
+      List<DailyWeather> days) {
+    List<Map<String, dynamic>> jsonList = List.empty(growable: true);
+    for (var day in days) {
+      jsonList.add(day.toJson());
+    }
+    return jsonList;
+  }
 
   @override
   String toString() {
