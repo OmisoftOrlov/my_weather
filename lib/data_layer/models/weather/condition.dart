@@ -1,4 +1,4 @@
-import '../../strings.dart';
+import '../../../strings.dart';
 
 class Condition {
   final String typeId;

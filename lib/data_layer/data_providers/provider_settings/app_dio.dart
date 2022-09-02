@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import 'api_elements.dart';
 import '../provider_settings/logging_interceptor.dart';
@@ -10,13 +11,18 @@ class AppDio {
       baseUrl: baseUrl,
       responseType: ResponseType.json,
     ),
-  )..interceptors.add(LoggerInterceptor());
+  );
 
   factory AppDio() {
+    if (kDebugMode) {}
     return _instance;
   }
 
-  AppDio._internal();
+  AppDio._internal() {
+    if(kDebugMode) {
+      _dio.interceptors.add(LoggerInterceptor());
+    }
+  }
 
   get client => _dio;
 }

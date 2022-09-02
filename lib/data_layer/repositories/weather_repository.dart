@@ -1,6 +1,7 @@
+import '../models/exceptions/network_exceptions.dart';
 import '../data_providers/astronomy_provider/astronomy_provider.dart';
-import '../models/astronomy_forecast.dart';
-import '../models/weather.dart';
+import '../models/astronomy/astronomy_forecast.dart';
+import '../models/weather/weather.dart';
 import '../data_providers/weather_provider/weather_provider.dart';
 
 class WeatherRepository {
@@ -16,12 +17,12 @@ class WeatherRepository {
 
   Future<Weather> getTodayForecastByLocation() async {
     try {
-      var astronomyForecast = await getAstronomyForecastByLocation();
+      var astronomyForecast = await getTodayAstronomyForecastByLocation();
       var response = await _weatherProvider.getWeatherTodayForecastByLocation();
       return Weather.fromJson(response, astronomyForecast);
-    } catch (e, stacktrace) {
-      rethrow;
-    } finally {}
+    } catch (e) {
+      throw NetworkException.fromError(e);
+    }
   }
 
   Future<Weather> getWeatherForecastByLocation() async {
@@ -30,9 +31,19 @@ class WeatherRepository {
       var response =
           await _weatherProvider.getWeather15daysForecastByLocation();
       return Weather.fromJson(response, astronomyForecast);
-    } catch (e, stacktrace) {
-      rethrow;
-    } finally {}
+    } catch (e) {
+      throw NetworkException.fromError(e);
+    }
+  }
+
+  Future<AstronomyForecast> getTodayAstronomyForecastByLocation() async {
+    try {
+      var response =
+          await _astronomyProvider.getTodayAstronomyForecastByLocation();
+      return AstronomyForecast.fromJson(response);
+    } catch (e) {
+      throw NetworkException.fromError(e);
+    }
   }
 
   Future<AstronomyForecast> getAstronomyForecastByLocation() async {
@@ -40,8 +51,8 @@ class WeatherRepository {
       var response =
           await _astronomyProvider.getAstronomy15daysForecastByLocation();
       return AstronomyForecast.fromJson(response);
-    } catch (e, stacktrace) {
-      rethrow;
-    } finally {}
+    } catch (e) {
+      throw NetworkException.fromError(e);
+    }
   }
 }

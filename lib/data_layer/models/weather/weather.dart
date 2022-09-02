@@ -1,6 +1,6 @@
-import '../models/astronomy_forecast.dart';
-import '../models/current_weather.dart';
-import '../models/daily_weather.dart';
+import '../astronomy/astronomy_forecast.dart';
+import 'current_weather.dart';
+import 'daily_weather.dart';
 
 class Weather {
   final String timeZone;

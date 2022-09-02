@@ -1,9 +1,11 @@
-import '../models/condition.dart';
-import '../models/day_astronomy_forecast.dart';
-import '../models/utils/serialization_utils.dart';
-import '../models/enums/precipitation_type.dart';
+import '../astronomy/astronomy_forecast.dart';
 
-class HourlyWeather {
+import '../utils/serialization_utils.dart';
+import '../enums/precipitation_type.dart';
+import 'condition.dart';
+
+// should use manual de/serialization because we need to calculate precipType depending on what time is it (day/night)
+class CurrentWeather {
   final DateTime dateTime;
   final double temperature;
   final double feelsLike;
@@ -15,7 +17,7 @@ class HourlyWeather {
   final double pressure;
   final List<Condition> conditions;
 
-  HourlyWeather._({
+  CurrentWeather._({
     required this.dateTime,
     required this.temperature,
     required this.feelsLike,
@@ -28,8 +30,8 @@ class HourlyWeather {
     required this.conditions,
   });
 
-  factory HourlyWeather.fromJson(
-      Map<String, dynamic> json, DayAstronomyForecast dayAstronomyForecast) {
+  factory CurrentWeather.fromJson(
+      Map<String, dynamic> json, AstronomyForecast astronomyForecast) {
     var dateTime = dateTimeFromJson(json["datetimeEpoch"]);
     var temperature = json["temp"];
     var feelsLike = json["feelslike"];
@@ -39,10 +41,10 @@ class HourlyWeather {
     var windSpeed = json["windspeed"];
     var windDirection = json["winddir"];
     var pressure = json["pressure"];
-    var conditions =
-        conditionFromJson(json["conditions"], dateTime, dayAstronomyForecast);
+    var conditions = conditionFromJson(json["conditions"], dateTime,
+        astronomyForecast.getAstronomyForecastByDate(dateTime));
 
-    return HourlyWeather._(
+    return CurrentWeather._(
         dateTime: dateTime,
         temperature: temperature,
         feelsLike: feelsLike,
@@ -56,7 +58,7 @@ class HourlyWeather {
   }
 
   Map<String, dynamic> toJson() => {
-        "datetimeEpoch": dateTime,
+        "datetimeEpoch": dateTimeToJson(dateTime),
         "temp": temperature,
         "feelslike": feelsLike,
         "humidity": humidity,
@@ -70,6 +72,6 @@ class HourlyWeather {
 
   @override
   String toString() {
-    return "Hourly weather: $dateTime, $temperature, $feelsLike, $humidity, $precipitationProbability, ${precipTypes.toString()} $windSpeed, $windDirection, $pressure, $conditions";
+    return "Current weather: $dateTime, $temperature, $feelsLike, $humidity, $precipitationProbability, ${precipTypes.toString()}, $windSpeed, $windDirection, $pressure, $conditions";
   }
 }

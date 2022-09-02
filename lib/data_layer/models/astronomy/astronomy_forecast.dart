@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_weather/data_layer/models/day_astronomy_forecast.dart';
+import 'package:my_weather/data_layer/models/astronomy/day_astronomy_forecast.dart';
 
 part 'astronomy_forecast.g.dart';
 

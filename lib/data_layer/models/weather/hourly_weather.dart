@@ -1,12 +1,9 @@
-import '../models/astronomy_forecast.dart';
-import '../models/day_astronomy_forecast.dart';
+import 'condition.dart';
+import '../astronomy/day_astronomy_forecast.dart';
+import '../utils/serialization_utils.dart';
+import '../enums/precipitation_type.dart';
 
-import '../models/utils/serialization_utils.dart';
-import '../models/hourly_weather.dart';
-import '../models/condition.dart';
-import '../models/enums/precipitation_type.dart';
-
-class DailyWeather {
+class HourlyWeather {
   final DateTime dateTime;
   final double temperature;
   final double feelsLike;
@@ -17,9 +14,8 @@ class DailyWeather {
   final double windDirection;
   final double pressure;
   final List<Condition> conditions;
-  final List<HourlyWeather> hours;
 
-  DailyWeather._({
+  HourlyWeather._({
     required this.dateTime,
     required this.temperature,
     required this.feelsLike,
@@ -30,14 +26,11 @@ class DailyWeather {
     required this.windDirection,
     required this.pressure,
     required this.conditions,
-    required this.hours,
   });
 
-  factory DailyWeather.fromJson(
-      Map<String, dynamic> json, AstronomyForecast astronomyForecast) {
+  factory HourlyWeather.fromJson(
+      Map<String, dynamic> json, DayAstronomyForecast dayAstronomyForecast) {
     var dateTime = dateTimeFromJson(json["datetimeEpoch"]);
-    var dayAstronomyForecast =
-        astronomyForecast.getAstronomyForecastByDate(dateTime);
     var temperature = json["temp"];
     var feelsLike = json["feelslike"];
     var humidity = json["humidity"];
@@ -48,10 +41,8 @@ class DailyWeather {
     var pressure = json["pressure"];
     var conditions =
         conditionFromJson(json["conditions"], dateTime, dayAstronomyForecast);
-    var hours =
-        getHourlyWeatherListFromJson(json["hours"], dayAstronomyForecast);
 
-    return DailyWeather._(
+    return HourlyWeather._(
         dateTime: dateTime,
         temperature: temperature,
         feelsLike: feelsLike,
@@ -61,8 +52,7 @@ class DailyWeather {
         windSpeed: windSpeed,
         windDirection: windDirection,
         pressure: pressure,
-        conditions: conditions,
-        hours: hours);
+        conditions: conditions);
   }
 
   Map<String, dynamic> toJson() => {
@@ -75,31 +65,11 @@ class DailyWeather {
         "windspeed": windSpeed,
         "winddir": windDirection,
         "pressure": pressure,
-        "conditions": conditionToJson(conditions),
-        "hours": convertHourlyWeatherListToJson(hours)
+        "conditions": conditionToJson(conditions)
       };
-
-  static List<HourlyWeather> getHourlyWeatherListFromJson(
-      List<dynamic> hoursList,
-      DayAstronomyForecast dayAstronomyForecast) {
-    List<HourlyWeather> hours = List.empty(growable: true);
-    for (var receivedHour in hoursList) {
-      hours.add(HourlyWeather.fromJson(receivedHour, dayAstronomyForecast));
-    }
-    return hours;
-  }
-
-  static List<Map<String, dynamic>> convertHourlyWeatherListToJson(
-      List<HourlyWeather> hours) {
-    List<Map<String, dynamic>> jsonList = List.empty(growable: true);
-    for (var hour in hours) {
-      jsonList.add(hour.toJson());
-    }
-    return jsonList;
-  }
 
   @override
   String toString() {
-    return "Daily weather: $dateTime, $temperature, $feelsLike, $humidity, $precipitationProbability, ${precipTypes.toString()}, $windSpeed, $windDirection, $pressure, $conditions, $hours";
+    return "Hourly weather: $dateTime, $temperature, $feelsLike, $humidity, $precipitationProbability, ${precipTypes.toString()} $windSpeed, $windDirection, $pressure, $conditions";
   }
 }

@@ -1,6 +1,6 @@
-import '../day_astronomy_forecast.dart';
+import '../astronomy/day_astronomy_forecast.dart';
 
-import '../condition.dart';
+import '../weather/condition.dart';
 import '../enums/precipitation_type.dart';
 
 DateTime dateTimeFromJson(int timestamp) =>

@@ -1,0 +1,4 @@
+enum InternetConnectionType {
+  wifi,
+  mobile,
+}

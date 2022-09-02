@@ -16,6 +16,14 @@ class AstronomyProvider {
     return _instance;
   }
 
+  Future<Map<String, dynamic>> getTodayAstronomyForecastByLocation() async {
+    final userLocation = await _locationProvider.getUserCurrentLocation();
+    String endpointPath =
+        "${userLocation.latitude},${userLocation.longitude}/today?elements=$queryAstronomyElements&key=$weatherApiKey";
+    final response = await _appDio.client.get(endpointPath);
+    return response.data;
+  }
+
   Future<Map<String, dynamic>> getAstronomy15daysForecastByLocation() async {
     final userLocation = await _locationProvider.getUserCurrentLocation();
     String endpointPath =

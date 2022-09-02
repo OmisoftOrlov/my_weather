@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:my_weather/data_layer/repositories/weather_repository.dart';
+
+import '../business_logic_layer/astronomy_forecast_cubit/astronomy_forecast_cubit.dart';
+import '../data_layer/repositories/weather_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,17 +47,19 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Lottie.asset("assets/lottie_animations/clear_day.json",
                   width: 200, height: 200),
-              FutureBuilder(
-                  future: repository.getTodayForecastByLocation(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
-                    } else if (snapshot.hasData) {
-                      return Text(snapshot.data.toString());
-                    } else {
-                      return const Text("Something went wrong");
+              BlocBuilder<AstronomyForecastCubit, AstronomyForecastState>(
+                  bloc: AstronomyForecastCubit(repository),
+                  builder: (context, state) {
+                    switch (state.runtimeType) {
+                      case AstronomyForecastLoading:
+                        return const CircularProgressIndicator();
+                      case AstronomyForecastLoaded:
+                        return Text(
+                            (state as AstronomyForecastLoaded).astronomyForecast.toString());
+                      case AstronomyForecastLoadingFailed:
+                        return Text((state as AstronomyForecastLoadingFailed).errorMessage);
+                      default:
+                        return const Text("Something went wrong");
                     }
                   }),
             ],
