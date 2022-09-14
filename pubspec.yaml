@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
+  flutter_osm_plugin: ^0.39.1
   geocoding: ^2.0.4
   geolocator: ^9.0.1
   logger: ^1.1.0

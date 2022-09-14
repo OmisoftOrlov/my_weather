@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:my_weather/presentation_layer/screens/choose_location_screen.dart';
 
 import '../business_logic_layer/astronomy_forecast_cubit/astronomy_forecast_cubit.dart';
 import '../data_layer/repositories/weather_repository.dart';
@@ -14,12 +16,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    const style = SystemUiOverlayStyle(
+      statusBarColor: Colors.blue,
+      systemNavigationBarColor: Colors.blue,
+      systemNavigationBarDividerColor: Colors.blue,
+    );
+    SystemChrome.setSystemUIOverlayStyle(style);
     return MaterialApp(
       title: 'Awesome Weather',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: ChooseLocationScreen(),
     );
   }
 }
@@ -54,10 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       case AstronomyForecastLoading:
                         return const CircularProgressIndicator();
                       case AstronomyForecastLoaded:
-                        return Text(
-                            (state as AstronomyForecastLoaded).astronomyForecast.toString());
+                        return Text((state as AstronomyForecastLoaded)
+                            .astronomyForecast
+                            .toString());
                       case AstronomyForecastLoadingFailed:
-                        return Text((state as AstronomyForecastLoadingFailed).errorMessage);
+                        return Text((state as AstronomyForecastLoadingFailed)
+                            .errorMessage);
                       default:
                         return const Text("Something went wrong");
                     }
