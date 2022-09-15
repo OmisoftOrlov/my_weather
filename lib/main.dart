@@ -16,17 +16,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
-    const style = SystemUiOverlayStyle(
-      statusBarColor: Colors.blue,
-      systemNavigationBarColor: Colors.blue,
-      systemNavigationBarDividerColor: Colors.blue,
-    );
-    SystemChrome.setSystemUIOverlayStyle(style);
+    _setupSystemOverlay();
     return MaterialApp(
       title: 'Awesome Weather',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
       ),
       home: ChooseLocationScreen(),
     );
@@ -79,4 +73,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+void _setupSystemOverlay() {
+  const themeColor = Color.fromRGBO(41, 110, 1, 0.5);
+  const style = SystemUiOverlayStyle(
+    statusBarColor: themeColor,
+    systemNavigationBarColor: themeColor,
+    systemNavigationBarDividerColor: themeColor,
+  );
+  SystemChrome.setSystemUIOverlayStyle(style);
 }
