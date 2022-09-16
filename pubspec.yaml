@@ -29,6 +29,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: '>4.4.0'
+  flutter_native_splash: ^2.2.9
+
+flutter_native_splash:
+  image: assets/splash.png
+  color: "#41ab03"
+  android: true
+  ios: true
 
 flutter:
   uses-material-design: true
@@ -90,6 +97,7 @@ flutter:
     - assets/lottie_animations/clear_day.json
     - assets/lottie_animations/clear_night.json
     - assets/lottie_animations/undefined.json
+    - assets/splash.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

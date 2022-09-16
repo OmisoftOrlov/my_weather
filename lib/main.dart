@@ -7,7 +7,7 @@ import 'package:my_weather/presentation_layer/screens/choose_location_screen.dar
 import '../business_logic_layer/astronomy_forecast_cubit/astronomy_forecast_cubit.dart';
 import '../data_layer/repositories/weather_repository.dart';
 
-void main() {
+Future main() async {
   runApp(const MyApp());
 }
 
